@@ -915,102 +915,146 @@
             container.innerHTML = `<div class="repos-grid">${reposHtml}</div>`;
         }
 
-        // Slideshow functionality
+        // Slideshow functionality - Simplified and reliable approach
         let slideIndex = 1;
         let slideTimer;
         let slides = [];
+        let galleryLoaded = false;
 
-        // Common image extensions to try
-        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
-        const maxImages = 20; // Check for up to 20 images
+        // Predefined list of images to look for (you can modify this list)
+        const imagesToCheck = [
+            'image1', 'image2', 'image3', 'image4', 'image5',
+            'image6', 'image7', 'image8', 'image9', 'image10'
+        ];
 
         async function loadImageGallery() {
             const wrapper = document.getElementById('slideshow-wrapper');
-            const loadingDiv = document.getElementById('slideshow-loading');
             const slideDots = document.getElementById('slide-dots');
             const prevBtn = document.querySelector('.prev-btn');
             const nextBtn = document.querySelector('.next-btn');
             
             slides = [];
             
-            try {
-                // Try to load images numbered 1, 2, 3, etc.
-                for (let i = 1; i <= maxImages; i++) {
-                    let imageFound = false;
-                    let imageUrl = '';
-                    let imageName = '';
-                    
-                    // Try different extensions
-                    for (const ext of imageExtensions) {
-                        const testUrl = `./images/image${i}.${ext}`;
-                        try {
-                            const response = await fetch(testUrl, { method: 'HEAD' });
-                            if (response.ok) {
-                                imageUrl = testUrl;
-                                imageName = `image${i}`;
-                                imageFound = true;
-                                break;
-                            }
-                        } catch (e) {
-                            // Continue trying other extensions
-                        }
-                    }
-                    
-                    if (imageFound) {
-                        // Try to load description
-                        let title = `Image ${i}`;
-                        let description = 'No description available';
-                        
-                        try {
-                            const descResponse = await fetch(`./images/image${i}.txt`);
-                            if (descResponse.ok) {
-                                const descText = await descResponse.text();
-                                const lines = descText.trim().split('\n');
-                                if (lines.length >= 1) title = lines[0];
-                                if (lines.length >= 2) description = lines.slice(1).join(' ');
-                            }
-                        } catch (e) {
-                            // Use default title and description
-                        }
-                        
-                        slides.push({
+            // Simple approach: try to load each predefined image
+            for (const imageName of imagesToCheck) {
+                const imageUrl = `./images/${imageName}.jpg`; // Default to .jpg
+                
+                try {
+                    // Create a test image to see if it loads
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        // Image exists, add to slides
+                        const slideData = {
                             url: imageUrl,
                             name: imageName,
-                            title: title,
-                            description: description
-                        });
-                    } else {
-                        // If we can't find this numbered image, stop looking
-                        break;
-                    }
+                            title: `Gallery Image`,
+                            description: 'Click to view full image'
+                        };
+                        
+                        // Try to load description file
+                        fetch(`./images/${imageName}.txt`)
+                            .then(response => response.ok ? response.text() : null)
+                            .then(text => {
+                                if (text) {
+                                    const lines = text.trim().split('\n');
+                                    slideData.title = lines[0] || slideData.title;
+                                    slideData.description = lines.slice(1).join(' ') || slideData.description;
+                                }
+                                slides.push(slideData);
+                                
+                                // If this is the first image, build the slideshow
+                                if (slides.length === 1) {
+                                    buildSlideshow();
+                                }
+                            })
+                            .catch(() => {
+                                // No description file, use defaults
+                                slides.push(slideData);
+                                if (slides.length === 1) {
+                                    buildSlideshow();
+                                }
+                            });
+                    };
+                    
+                    testImg.onerror = function() {
+                        // Image doesn't exist, try other extensions
+                        const extensions = ['png', 'gif', 'webp'];
+                        tryOtherExtensions(imageName, extensions, 0);
+                    };
+                    
+                    testImg.src = imageUrl;
+                    
+                } catch (error) {
+                    console.log(`Couldn't load ${imageName}:`, error);
                 }
-                
+            }
+            
+            // After checking all images, show message if none found
+            setTimeout(() => {
                 if (slides.length === 0) {
-                    // No images found, show message
-                    wrapper.innerHTML = `
-                        <div class="loading">
-                            <p style="color: #64ffda; margin-bottom: 15px;">📸 Gallery Ready!</p>
-                            <div style="background: rgba(40, 40, 40, 0.8); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1);">
-                                <p style="color: #b0b0b0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
-                                    Add your images to the <code>images</code> folder in your repository:
-                                </p>
-                                <ul style="color: #888; font-size: 0.85rem; line-height: 1.5; padding-left: 20px;">
-                                    <li><strong>Images:</strong> <code>image1.jpg</code>, <code>image2.png</code>, etc.</li>
-                                    <li><strong>Descriptions:</strong> <code>image1.txt</code>, <code>image2.txt</code>, etc.</li>
-                                    <li><strong>Text format:</strong> First line = title, rest = description</li>
-                                </ul>
-                                <div style="margin-top: 15px; padding: 10px; background: rgba(100, 255, 218, 0.1); border-radius: 8px; border-left: 3px solid #64ffda;">
-                                    <p style="color: #64ffda; font-size: 0.85rem; margin: 0;">
-                                        <strong>Example:</strong> Create <code>image1.txt</code> with:<br>
-                                        <code>My Research Project</code><br>
-                                        <code>This image shows the results of my latest experiment...</code>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    return;
+                    showNoImagesMessage();
                 }
+            }, 3000); // Wait 3 seconds for images to load
+        }
+
+        function tryOtherExtensions(imageName, extensions, index) {
+            if (index >= extensions.length) return;
+            
+            const imageUrl = `./images/${imageName}.${extensions[index]}`;
+            const testImg = new Image();
+            
+            testImg.onload = function() {
+                const slideData = {
+                    url: imageUrl,
+                    name: imageName,
+                    title: `Gallery Image`,
+                    description: 'Click to view full image'
+                };
+                
+                // Try to load description
+                fetch(`./images/${imageName}.txt`)
+                    .then(response => response.ok ? response.text() : null)
+                    .then(text => {
+                        if (text) {
+                            const lines = text.trim().split('\n');
+                            slideData.title = lines[0] || slideData.title;
+                            slideData.description = lines.slice(1).join(' ') || slideData.description;
+                        }
+                        slides.push(slideData);
+                        if (slides.length === 1) {
+                            buildSlideshow();
+                        }
+                    })
+                    .catch(() => {
+                        slides.push(slideData);
+                        if (slides.length === 1) {
+                            buildSlideshow();
+                        }
+                    });
+            };
+            
+            testImg.onerror = function() {
+                tryOtherExtensions(imageName, extensions, index + 1);
+            };
+            
+            testImg.src = imageUrl;
+        }
+
+        function buildSlideshow() {
+            if (galleryLoaded) return; // Only build once
+            galleryLoaded = true;
+            
+            const wrapper = document.getElementById('slideshow-wrapper');
+            const slideDots = document.getElementById('slide-dots');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            
+            // Wait a bit for more images to load
+            setTimeout(() => {
+                if (slides.length === 0) return;
+                
+                // Sort slides by name to maintain order
+                slides.sort((a, b) => a.name.localeCompare(b.name));
                 
                 // Create slides HTML
                 let slidesHtml = '';
@@ -1033,24 +1077,47 @@
                 wrapper.innerHTML = slidesHtml;
                 slideDots.innerHTML = dotsHtml;
                 
-                // Show controls
-                prevBtn.style.display = 'block';
-                nextBtn.style.display = 'block';
-                slideDots.style.display = 'block';
+                // Show controls only if there are multiple slides
+                if (slides.length > 1) {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                    slideDots.style.display = 'block';
+                    startAutoSlide();
+                } else if (slides.length === 1) {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                    slideDots.style.display = 'none';
+                }
                 
-                // Start slideshow
                 slideIndex = 1;
-                startAutoSlide();
                 
-            } catch (error) {
-                console.error('Error loading gallery:', error);
-                wrapper.innerHTML = `
-                    <div class="loading">
-                        <p style="color: #ff6b6b;">Error loading gallery</p>
-                        <p style="font-size: 0.9rem; color: #999;">Check the browser console for details</p>
+            }, 1000); // Wait 1 second for more images
+        }
+
+        function showNoImagesMessage() {
+            const wrapper = document.getElementById('slideshow-wrapper');
+            wrapper.innerHTML = `
+                <div class="loading">
+                    <p style="color: #64ffda; margin-bottom: 15px;">📸 Gallery Ready!</p>
+                    <div style="background: rgba(40, 40, 40, 0.8); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <p style="color: #b0b0b0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                            Add your images to the <code>images</code> folder in your repository:
+                        </p>
+                        <ul style="color: #888; font-size: 0.85rem; line-height: 1.5; padding-left: 20px;">
+                            <li><strong>Images:</strong> <code>image1.jpg</code>, <code>image2.png</code>, etc.</li>
+                            <li><strong>Descriptions (optional):</strong> <code>image1.txt</code>, <code>image2.txt</code>, etc.</li>
+                            <li><strong>Text format:</strong> First line = title, rest = description</li>
+                        </ul>
+                        <div style="margin-top: 15px; padding: 10px; background: rgba(100, 255, 218, 0.1); border-radius: 8px; border-left: 3px solid #64ffda;">
+                            <p style="color: #64ffda; font-size: 0.85rem; margin: 0;">
+                                <strong>Example:</strong> Upload <code>image1.jpg</code> and create <code>image1.txt</code> with:<br>
+                                <span style="font-family: monospace;">My Project Title</span><br>
+                                <span style="font-family: monospace;">Description of this amazing project...</span>
+                            </p>
+                        </div>
                     </div>
-                `;
-            }
+                </div>
+            `;
         }
 
         function showSlide(n) {
@@ -1078,7 +1145,7 @@
             clearInterval(slideTimer);
             slideIndex += n;
             showSlide(slideIndex);
-            startAutoSlide();
+            if (slides.length > 1) startAutoSlide();
         }
 
         function currentSlide(n) {
@@ -1086,7 +1153,7 @@
             clearInterval(slideTimer);
             slideIndex = n;
             showSlide(slideIndex);
-            startAutoSlide();
+            if (slides.length > 1) startAutoSlide();
         }
 
         function nextSlide() {
@@ -1097,10 +1164,10 @@
 
         function startAutoSlide() {
             if (slides.length <= 1) return;
-            slideTimer = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+            slideTimer = setInterval(nextSlide, 5000);
         }
 
-        // Initialize slideshow and GitHub repos when page loads
+        // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
             fetchGitHubRepos();
             loadImageGallery();
