@@ -328,7 +328,125 @@
             50% { opacity: 0.7; }
         }
 
-        @media (max-width: 768px) {
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            background: rgba(40, 40, 40, 0.6);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slideshow-wrapper {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            position: relative;
+            height: 100%;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .slide:hover img {
+            transform: scale(1.02);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 30px 25px 20px;
+        }
+
+        .slide-caption h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #64ffda;
+        }
+
+        .slide-caption p {
+            font-size: 1rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+        }
+
+        .slide-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 15px 12px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 0 5px 5px 0;
+            z-index: 10;
+        }
+
+        .prev-btn {
+            left: 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .next-btn {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .slide-btn:hover {
+            background: rgba(100, 255, 218, 0.8);
+            color: #000;
+        }
+
+        .slide-dots {
+            text-align: center;
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.9);
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active,
+        .dot:hover {
+            background-color: #64ffda;
+            transform: scale(1.2);
+        }
+
+        /* Auto slideshow animation */
+        @keyframes slideshow {
+            0%, 20% { opacity: 1; }
+            25%, 95% { opacity: 0; }
+            100% { opacity: 1; }
+        }
             .container {
                 padding: 10px;
             }
@@ -365,6 +483,12 @@
                     </svg>
                     LinkedIn
                 </a>
+                <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" class="contact-item" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M5.242 13.769L0.5 9.5 12 1l11.5 8.5-4.742 4.269C17.548 12.179 14.978 11.5 12 11.5s-5.548.679-6.758 2.269zM12 10a7 7 0 110 14 7 7 0 010-14z"/>
+                    </svg>
+                    Google Scholar
+                </a>
                 <a href="https://github.com/linkangit" class="contact-item" target="_blank">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="github-logo">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -392,20 +516,171 @@
             </div>
         </section>
 
+        <section class="section">
+            <h2>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                </svg>
+                Gallery
+            </h2>
+            <div class="slideshow-container">
+                <div class="slideshow-wrapper" id="slideshow-wrapper">
+                    <div class="loading" id="slideshow-loading">
+                        <div class="spinner"></div>
+                        <p>Loading gallery...</p>
+                    </div>
+                </div>
+                
+                <button class="slide-btn prev-btn" onclick="changeSlide(-1)" style="display: none;">❮</button>
+                <button class="slide-btn next-btn" onclick="changeSlide(1)" style="display: none;">❯</button>
+                
+                <div class="slide-dots" id="slide-dots" style="display: none;"></div>
+            </div>
+            <div style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: #888;">
+                <p>💡 <strong>Tip:</strong> Add images to <code>./images/</code> folder with matching <code>.txt</code> files for descriptions</p>
+            </div>
+        </section>
+
         <section class="section github-section">
             <h2>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
-                Latest GitHub Projects
+                Featured GitHub Projects
             </h2>
-            <div id="github-repos">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading latest repositories...</p>
+            <div class="repos-grid">
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">RNA-Seq Analysis Pipeline</a>
+                    </div>
+                    <p class="repo-description">Leveraged PyDESeq2 for differential expression, followed by Gene Ontology enrichment and Upset analysis on high-impact datasets (Dash et al., 2023).</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                        <span class="stat">
+                            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"></path>
+                            </svg>
+                            ⭐
+                        </span>
+                    </div>
+                    <div class="updated-time">Featured in Publications</div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">Single-Cell RNA-seq Innovation</a>
+                    </div>
+                    <p class="repo-description">Applied state-of-the-art machine learning tools (SCVI) and trajectory analysis (pyMonocle) to dissect cellular heterogeneity in 10x Genomics datasets.</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #198CE7"></span>
+                            R
+                        </span>
+                    </div>
+                    <div class="updated-time">Industry R&D Project</div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">Spatial Transcriptomics Pipeline</a>
+                    </div>
+                    <p class="repo-description">Conducted spatially resolved transcriptomic profiling using cutting-edge 10x Genomics data, uncovering tissue-specific gene expression patterns.</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #DA5B0B"></span>
+                            Jupyter Notebook
+                        </span>
+                    </div>
+                    <div class="updated-time">Cutting-edge Analysis</div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">10x Visium HD Analysis</a>
+                    </div>
+                    <p class="repo-description">Developed an end-to-end analysis pipeline for 10x Visium HD (8 μm) data integrating Scanpy and Squidpy. Performed QC, clustering, and spatial visualization.</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #89e051"></span>
+                            Shell
+                        </span>
+                    </div>
+                    <div class="updated-time">High-resolution Spatial</div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.75 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">GATK4 Mutect2 Workflow</a>
+                    </div>
+                    <p class="repo-description">Reproducible workflow for calling somatic variants from WGS data using GATK4 Mutect2, following GATK Best Practices. Cost reduction strategy achieved 60% savings.</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #89e051"></span>
+                            Shell
+                        </span>
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                    </div>
+                    <div class="updated-time">Production Pipeline</div>
+                </div>
+
+                <div class="repo-card">
+                    <div class="repo-header">
+                        <svg class="repo-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"></path>
+                        </svg>
+                        <a href="https://github.com/linkangit" class="repo-name" target="_blank">Gene Regulatory Networks</a>
+                    </div>
+                    <p class="repo-description">Built robust RNA-seq co-expression networks (pyWGCNA) and gene regulatory network inference (pyGENIE3) revealing >30 novel candidate genes from SE centric GRN modules.</p>
+                    <div class="repo-stats">
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #3776ab"></span>
+                            Python
+                        </span>
+                        <span class="stat">
+                            <span class="language-color" style="background-color: #198CE7"></span>
+                            R
+                        </span>
+                    </div>
+                    <div class="updated-time">Network Biology</div>
                 </div>
             </div>
-        </section>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://github.com/linkangit" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: linear-gradient(135deg, #64ffda, #2196f3); color: #000; text-decoration: none; border-radius: 25px; font-weight: 600; transition: transform 0.3s ease;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path 
 
         <section class="section">
             <h2>
@@ -416,7 +691,7 @@
             </h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Single-cell & Spatial Transcriptomics</h3>
+                    <h3>🧬 Single-cell & Spatial Genomics</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Cellranger</span>
                         <span class="skill-tag">Scanpy</span>
@@ -425,39 +700,46 @@
                         <span class="skill-tag">Signac</span>
                         <span class="skill-tag">Spaceranger</span>
                         <span class="skill-tag">Cell2location</span>
+                        <span class="skill-tag">pyMonocle</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3>Programming & Statistics</h3>
+                    <h3>💻 Programming & Data Science</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Python</span>
                         <span class="skill-tag">R</span>
                         <span class="skill-tag">Bash/Shell</span>
-                        <span class="skill-tag">Azure Cloud</span>
                         <span class="skill-tag">Git</span>
                         <span class="skill-tag">Snakemake</span>
+                        <span class="skill-tag">Azure Cloud</span>
                         <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">HPC Systems</span>
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3>Bioinformatics</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Multi-omics Integration</span>
-                        <span class="skill-tag">WGCNA</span>
-                        <span class="skill-tag">GATK</span>
-                        <span class="skill-tag">STAR</span>
-                        <span class="skill-tag">DESeq2</span>
-                        <span class="skill-tag">Variant Calling</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Molecular Biology</h3>
+                    <h3>🔬 Molecular Biology & NGS</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">CRISPR/Cas9</span>
                         <span class="skill-tag">qPCR/ddPCR</span>
                         <span class="skill-tag">NGS Library Prep</span>
                         <span class="skill-tag">Protein Purification</span>
-                        <span class="skill-tag">Microscopy</span>
+                        <span class="skill-tag">Live Cell Imaging</span>
+                        <span class="skill-tag">Confocal Microscopy</span>
+                        <span class="skill-tag">Flow Cytometry</span>
+                        <span class="skill-tag">Western Blotting</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>📊 Bioinformatics & Analysis</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Multi-omics Integration</span>
+                        <span class="skill-tag">WGCNA</span>
+                        <span class="skill-tag">GATK/STAR</span>
+                        <span class="skill-tag">DESeq2</span>
+                        <span class="skill-tag">Variant Calling</span>
+                        <span class="skill-tag">ChIP-seq</span>
+                        <span class="skill-tag">RNA-seq</span>
+                        <span class="skill-tag">Network Biology</span>
                     </div>
                 </div>
             </div>
@@ -509,20 +791,80 @@
 
         async function fetchGitHubRepos() {
             try {
-                // Direct API call - should work perfectly on GitHub Pages!
-                const response = await fetch(GITHUB_API_URL + '?sort=updated&per_page=6');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                // Multiple strategies to ensure it works on GitHub Pages
+                const strategies = [
+                    // Strategy 1: Direct API call (works on GitHub Pages most of the time)
+                    () => fetch(`${GITHUB_API_URL}?sort=updated&per_page=6`, {
+                        headers: {
+                            'Accept': 'application/vnd.github.v3+json',
+                            'User-Agent': 'Portfolio-Website'
+                        }
+                    }),
+                    
+                    // Strategy 2: Using GitHub's public API with different headers
+                    () => fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/vnd.github+json'
+                        }
+                    }),
+                    
+                    // Strategy 3: Alternative endpoint
+                    () => fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?type=public&sort=updated&per_page=6`)
+                ];
+
+                let lastError;
+                
+                // Try each strategy
+                for (let i = 0; i < strategies.length; i++) {
+                    try {
+                        console.log(`Trying strategy ${i + 1}...`);
+                        const response = await strategies[i]();
+                        
+                        if (response.ok) {
+                            const repos = await response.json();
+                            console.log(`Strategy ${i + 1} successful!`, repos);
+                            displayRepos(repos);
+                            return;
+                        } else {
+                            console.log(`Strategy ${i + 1} failed with status:`, response.status);
+                            lastError = new Error(`HTTP ${response.status}`);
+                        }
+                    } catch (error) {
+                        console.log(`Strategy ${i + 1} error:`, error.message);
+                        lastError = error;
+                        continue;
+                    }
                 }
-                const repos = await response.json();
-                displayRepos(repos);
+                
+                throw lastError;
+                
             } catch (error) {
-                console.error('Error fetching GitHub repos:', error);
+                console.error('All strategies failed:', error);
+                
+                // Enhanced error message with troubleshooting
                 document.getElementById('github-repos').innerHTML = `
                     <div class="loading">
-                        <p style="color: #ff6b6b;">Unable to load repositories.</p>
-                        <p style="font-size: 0.9rem; color: #999; margin-top: 15px;">
-                            Visit <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color: #64ffda;">github.com/${GITHUB_USERNAME}</a> to view all repositories.
+                        <p style="color: #ff6b6b; margin-bottom: 15px;">⚠️ Unable to load live repository data</p>
+                        <div style="background: rgba(40, 40, 40, 0.8); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <p style="color: #64ffda; font-weight: 600; margin-bottom: 10px;">Don't worry! This is common and easily fixable:</p>
+                            <ul style="color: #b0b0b0; font-size: 0.9rem; line-height: 1.6; padding-left: 20px;">
+                                <li>The live GitHub data will work once deployed to GitHub Pages</li>
+                                <li>Current issue: Browser CORS restrictions on local/file URLs</li>
+                                <li>Solution: Deploy to GitHub Pages (as planned)</li>
+                            </ul>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                                <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" 
+                                   style="display: inline-flex; align-items: center; gap: 8px; color: #64ffda; text-decoration: none; font-weight: 500;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                    View all repositories on GitHub
+                                </a>
+                            </div>
+                        </div>
+                        <p style="color: #888; font-size: 0.85rem; margin-top: 15px;">
+                            💡 <strong>Pro tip:</strong> Once you deploy this to GitHub Pages, the repositories will load automatically!
                         </p>
                     </div>
                 `;
@@ -573,6 +915,203 @@
             container.innerHTML = `<div class="repos-grid">${reposHtml}</div>`;
         }
 
-        // Fetch repositories when page loads
-        document.addEventListener('DOMContentLoaded', fetchGitHubRepos);
+        // Slideshow functionality
+        let slideIndex = 1;
+        let slideTimer;
+        let slides = [];
+
+        // Common image extensions to try
+        const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        const maxImages = 20; // Check for up to 20 images
+
+        async function loadImageGallery() {
+            const wrapper = document.getElementById('slideshow-wrapper');
+            const loadingDiv = document.getElementById('slideshow-loading');
+            const slideDots = document.getElementById('slide-dots');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            
+            slides = [];
+            
+            try {
+                // Try to load images numbered 1, 2, 3, etc.
+                for (let i = 1; i <= maxImages; i++) {
+                    let imageFound = false;
+                    let imageUrl = '';
+                    let imageName = '';
+                    
+                    // Try different extensions
+                    for (const ext of imageExtensions) {
+                        const testUrl = `./images/image${i}.${ext}`;
+                        try {
+                            const response = await fetch(testUrl, { method: 'HEAD' });
+                            if (response.ok) {
+                                imageUrl = testUrl;
+                                imageName = `image${i}`;
+                                imageFound = true;
+                                break;
+                            }
+                        } catch (e) {
+                            // Continue trying other extensions
+                        }
+                    }
+                    
+                    if (imageFound) {
+                        // Try to load description
+                        let title = `Image ${i}`;
+                        let description = 'No description available';
+                        
+                        try {
+                            const descResponse = await fetch(`./images/image${i}.txt`);
+                            if (descResponse.ok) {
+                                const descText = await descResponse.text();
+                                const lines = descText.trim().split('\n');
+                                if (lines.length >= 1) title = lines[0];
+                                if (lines.length >= 2) description = lines.slice(1).join(' ');
+                            }
+                        } catch (e) {
+                            // Use default title and description
+                        }
+                        
+                        slides.push({
+                            url: imageUrl,
+                            name: imageName,
+                            title: title,
+                            description: description
+                        });
+                    } else {
+                        // If we can't find this numbered image, stop looking
+                        break;
+                    }
+                }
+                
+                if (slides.length === 0) {
+                    // No images found, show message
+                    wrapper.innerHTML = `
+                        <div class="loading">
+                            <p style="color: #64ffda; margin-bottom: 15px;">📸 Gallery Ready!</p>
+                            <div style="background: rgba(40, 40, 40, 0.8); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1);">
+                                <p style="color: #b0b0b0; font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                                    Add your images to the <code>images</code> folder in your repository:
+                                </p>
+                                <ul style="color: #888; font-size: 0.85rem; line-height: 1.5; padding-left: 20px;">
+                                    <li><strong>Images:</strong> <code>image1.jpg</code>, <code>image2.png</code>, etc.</li>
+                                    <li><strong>Descriptions:</strong> <code>image1.txt</code>, <code>image2.txt</code>, etc.</li>
+                                    <li><strong>Text format:</strong> First line = title, rest = description</li>
+                                </ul>
+                                <div style="margin-top: 15px; padding: 10px; background: rgba(100, 255, 218, 0.1); border-radius: 8px; border-left: 3px solid #64ffda;">
+                                    <p style="color: #64ffda; font-size: 0.85rem; margin: 0;">
+                                        <strong>Example:</strong> Create <code>image1.txt</code> with:<br>
+                                        <code>My Research Project</code><br>
+                                        <code>This image shows the results of my latest experiment...</code>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create slides HTML
+                let slidesHtml = '';
+                let dotsHtml = '';
+                
+                slides.forEach((slide, index) => {
+                    slidesHtml += `
+                        <div class="slide ${index === 0 ? 'active' : ''}">
+                            <img src="${slide.url}" alt="${slide.title}" loading="lazy">
+                            <div class="slide-caption">
+                                <h3>${slide.title}</h3>
+                                <p>${slide.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    dotsHtml += `<span class="dot ${index === 0 ? 'active' : ''}" onclick="currentSlide(${index + 1})"></span>`;
+                });
+                
+                wrapper.innerHTML = slidesHtml;
+                slideDots.innerHTML = dotsHtml;
+                
+                // Show controls
+                prevBtn.style.display = 'block';
+                nextBtn.style.display = 'block';
+                slideDots.style.display = 'block';
+                
+                // Start slideshow
+                slideIndex = 1;
+                startAutoSlide();
+                
+            } catch (error) {
+                console.error('Error loading gallery:', error);
+                wrapper.innerHTML = `
+                    <div class="loading">
+                        <p style="color: #ff6b6b;">Error loading gallery</p>
+                        <p style="font-size: 0.9rem; color: #999;">Check the browser console for details</p>
+                    </div>
+                `;
+            }
+        }
+
+        function showSlide(n) {
+            if (slides.length === 0) return;
+            
+            const slideElements = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+            
+            slideElements.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (slideElements[slideIndex - 1]) {
+                slideElements[slideIndex - 1].classList.add('active');
+            }
+            if (dots[slideIndex - 1]) {
+                dots[slideIndex - 1].classList.add('active');
+            }
+        }
+
+        function changeSlide(n) {
+            if (slides.length === 0) return;
+            clearInterval(slideTimer);
+            slideIndex += n;
+            showSlide(slideIndex);
+            startAutoSlide();
+        }
+
+        function currentSlide(n) {
+            if (slides.length === 0) return;
+            clearInterval(slideTimer);
+            slideIndex = n;
+            showSlide(slideIndex);
+            startAutoSlide();
+        }
+
+        function nextSlide() {
+            if (slides.length === 0) return;
+            slideIndex++;
+            showSlide(slideIndex);
+        }
+
+        function startAutoSlide() {
+            if (slides.length <= 1) return;
+            slideTimer = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+
+        // Initialize slideshow and GitHub repos when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchGitHubRepos();
+            loadImageGallery();
+        });
+
+        // Pause slideshow on hover
+        document.querySelector('.slideshow-container')?.addEventListener('mouseenter', () => {
+            clearInterval(slideTimer);
+        });
+
+        document.querySelector('.slideshow-container')?.addEventListener('mouseleave', () => {
+            if (slides.length > 1) startAutoSlide();
+        });
     </script
