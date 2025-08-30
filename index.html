@@ -99,6 +99,20 @@
             color: var(--accent-primary);
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .github-link {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -201,9 +215,6 @@
         /* Main Content */
         .main {
             background: var(--bg-primary);
-            margin: 0 20px;
-            border-radius: 20px;
-            overflow: hidden;
         }
 
         .section {
@@ -276,124 +287,85 @@
             letter-spacing: 1px;
         }
 
-        /* GitHub Repositories Section */
-        .github-header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
+        /* Publications Section */
+        .publications-list {
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        .github-header i {
-            font-size: 2rem;
-            color: var(--accent-primary);
-        }
-
-        .section-description {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .repos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .repo-card {
+        .publication-item {
             background: var(--bg-primary);
             padding: 2rem;
             border-radius: 15px;
             border: 1px solid var(--border-primary);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
         }
 
-        .repo-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .repo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+        .publication-item:hover {
+            transform: translateY(-4px);
             border-color: var(--accent-primary);
+            box-shadow: var(--shadow);
         }
 
-        .repo-card:hover::before {
-            opacity: 1;
-        }
-
-        .repo-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .repo-name {
+        .publication-item h3 {
+            color: var(--text-primary);
             font-size: 1.2rem;
-            font-weight: bold;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .publication-item .authors {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .publication-item .authors strong {
+            color: var(--accent-primary);
+        }
+
+        .publication-item .journal {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .publication-item .co-first {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-bottom: 0.75rem;
+        }
+
+        .publication-item .award {
+            color: var(--accent-success);
+            font-weight: 600;
+        }
+
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .pub-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             color: var(--accent-primary);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .repo-name:hover {
-            text-decoration: underline;
-        }
-
-        .repo-visibility {
-            background: var(--bg-tertiary);
-            color: var(--text-muted);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            border: 1px solid var(--border-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .repo-description {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            min-height: 3em;
-        }
-
-        .repo-footer {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
             font-size: 0.9rem;
-            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-primary);
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
 
-        .repo-stat {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .language-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
+        .pub-link:hover {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-color: var(--accent-primary);
         }
 
         /* Skills Section */
@@ -588,6 +560,10 @@
                 font-size: 2.5rem;
             }
             
+            .nav-right {
+                gap: 1rem;
+            }
+            
             .nav-links {
                 display: none;
             }
@@ -615,14 +591,19 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav container">
-            <a href="#" class="logo">linkan.dev</a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#github">Projects</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#experience">Experience</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+            <a href="#" class="logo">Linkan Dash</a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#publications">Publications</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="https://github.com/linkangit" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
         </nav>
     </header>
 
@@ -631,12 +612,15 @@
         <div class="container">
             <div class="hero-content">
                 <h1>
-                    I'm <span class="highlight">Linkan Dash</span>
+                    <span class="highlight">Linkan Dash</span>
                 </h1>
                 <p>Bioinformatician & Computational Biology Researcher</p>
                 <div class="cta-buttons">
-                    <a href="#github" class="btn btn-primary">
-                        <i class="fab fa-github"></i> View My Work
+                    <a href="#publications" class="btn btn-primary">
+                        <i class="fas fa-graduation-cap"></i> View Publications
+                    </a>
+                    <a href="https://github.com/linkangit" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-github"></i> GitHub Projects
                     </a>
                     <a href="#contact" class="btn btn-secondary">
                         <i class="fas fa-envelope"></i> Get In Touch
@@ -647,7 +631,8 @@
     </section>
 
     <!-- Main Content -->
-    <main class="main container">
+    <main class="main">
+        <div class="container">
         <!-- About Section -->
         <section id="about" class="section">
             <h2>About Me</h2>
@@ -661,35 +646,84 @@
                         <p>Years Research Experience</p>
                     </div>
                     <div class="stat">
-                        <h3>6</h3>
-                        <p>Publications</p>
-                    </div>
-                    <div class="stat">
-                        <h3>5</h3>
-                        <p>Programming Languages</p>
-                    </div>
-                    <div class="stat">
                         <h3>PhD</h3>
                         <p>Genetics & Genomics</p>
                     </div>
                 </div>
             </div>
         </section>
+    </main>
 
-        <!-- GitHub Repositories Section -->
-        <section id="github" class="section">
-            <div class="github-header">
-                <i class="fab fa-github"></i>
-                <h2>Featured GitHub Repositories</h2>
-            </div>
-            <p class="section-description">
-                Showcasing my latest computational biology and bioinformatics projects
-            </p>
-            
-            <div id="repos-container">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading repositories from GitHub...</p>
+        <!-- Publications Section -->
+        <section id="publications" class="section">
+            <h2>Publications</h2>
+            <div class="publications-list">
+                <div class="publication-item">
+                    <h3>Harnessing Single-Cell and Spatial Transcriptomics for Crop Improvement</h3>
+                    <p class="authors">Hu, Y., <strong>Dash, Linkan</strong>, May, G., Sardesai, Nagesh, & Deschamps, Stephane (2024)</p>
+                    <p class="journal"><em>Plants</em>, 13(24), 3476</p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <h3>Changes in cell wall composition due to a pectin biosynthesis enzyme GAUT10 impact root growth</h3>
+                    <p class="authors"><strong>Dash, Linkan</strong>, Swaminathan, Sivakumar, Šimura, Jan, et al. (2023)</p>
+                    <p class="journal"><em>Plant Physiology</em></p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <h3>The Auxin Response Factor ARF27 is required for maize root morphogenesis</h3>
+                    <p class="authors"><strong>Dash, Linkan</strong>, McReynolds, Maxwell R, et al. (2023)</p>
+                    <p class="journal"><em>bioRxiv</em></p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <h3>Roles of auxin pathways in maize biology</h3>
+                    <p class="authors">Cowling, Craig L*, <strong>Dash, Linkan*</strong>, Kelley, Dior R. (2023)</p>
+                    <p class="journal"><em>Journal of Experimental Botany</em></p>
+                    <p class="co-first">*Co-first authors</p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <h3>Temporal and spatial auxin responsive networks in maize primary roots</h3>
+                    <p class="authors">McReynolds, Maxwell R*, <strong>Dash, Linkan*</strong>, et al. (2022)</p>
+                    <p class="journal"><em>Quantitative Plant Biology</em></p>
+                    <p class="co-first">*Co-first authors</p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <h3>slim shady is a novel allele of PHYTOCHROME B present in the T-DNA line SALK_015201</h3>
+                    <p class="authors"><strong>Dash, Linkan</strong>, McEwan, Robert E, et al. (2021)</p>
+                    <p class="journal"><em>Plant Direct</em> - <span class="award">Top Cited Article (2021–2022)</span></p>
+                    <div class="publication-links">
+                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
+                            <i class="fas fa-graduation-cap"></i> Google Scholar
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -804,6 +838,12 @@
                     <i class="fas fa-graduation-cap"></i>
                     <h3>Google Scholar</h3>
                     <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank">View Publications</a>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fab fa-google"></i>
+                    <h3>Gmail</h3>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=linkandash15@gmail.com" target="_blank">Send Message</a>
                 </div>
                 
                 <div class="contact-item">
