@@ -1,1145 +1,805 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linkan Dash - Bioinformatician</title>
-    
-    <!-- Inter Font for better readability -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <style>
-        :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --text-muted: #656d76;
-            --border-primary: #30363d;
-            --border-secondary: #21262d;
-            --accent-primary: #58a6ff;
-            --accent-secondary: #1f6feb;
-            --accent-success: #56d364;
-            --accent-warning: #d29922;
-            --accent-danger: #f85149;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.6);
-            --gradient: linear-gradient(135deg, #58a6ff 0%, #1f6feb 50%, #0969da 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv11";
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
-            border-radius: 4px;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        .header {
-            background: rgba(13, 17, 23, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border-primary);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-primary);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .logo::before {
-            content: '> ';
-            color: var(--accent-primary);
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .github-link {
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 6px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 60px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(88, 166, 255, 0.1) 0%, transparent 50%);
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 3rem;
-            align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .hero-image {
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid var(--accent-primary);
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            background: var(--bg-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-image:hover {
-            transform: scale(1.05);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .hero-image .placeholder-icon {
-            font-size: 4rem;
-            color: var(--accent-primary);
-        }
-
-        .hero-text {
-            text-align: left;
-        }
-
-        .hero-text h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-        }
-
-        .hero-text h1 .highlight {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-text p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-            box-shadow: var(--shadow);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-primary);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        /* Main Content */
-        .main {
-            background: var(--bg-primary);
-        }
-
-        .section {
-            padding: 60px 40px;
-        }
-
-        .section:nth-child(even) {
-            background: var(--bg-secondary);
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            color: var(--text-primary);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        .section h2::before {
-            content: '// ';
-            color: var(--accent-primary);
-        }
-
-        /* About Section */
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat {
-            background: var(--bg-primary);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s ease;
-        }
-
-        .stat:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow);
-        }
-
-        .stat h3 {
-            font-size: 2rem;
-            color: var(--accent-primary);
-            margin-bottom: 0.5rem;
-            font-weight: 800;
-        }
-
-        .stat p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        /* Publications Section */
-        .publications-list {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .publication-item {
-            background: var(--bg-primary);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--border-primary);
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .publication-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow);
-        }
-
-        .publication-item h3 {
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-            letter-spacing: -0.01em;
-        }
-
-        .publication-item .authors {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .publication-item .authors strong {
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
-
-        .publication-item .journal {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .publication-item .co-first {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-bottom: 0.75rem;
-        }
-
-        .publication-item .award {
-            color: var(--accent-success);
-            font-weight: 600;
-        }
-
-        .publication-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .pub-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent-primary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-primary);
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .pub-link:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-            border-color: var(--accent-primary);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .skill-category {
-            background: var(--bg-primary);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow);
-        }
-
-        .skill-category h3 {
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .skill-tag {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s ease;
-        }
-
-        .skill-tag:hover {
-            background: var(--accent-primary);
-            color: var(--bg-primary);
-        }
-
-        /* Experience Section */
-        .timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 3rem 0;
-            border-bottom: 1px solid var(--border-primary);
-            background: var(--bg-secondary);
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow);
-        }
-
-        .timeline-item:last-child {
-            border-bottom: 1px solid var(--border-primary);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -18px;
-            top: 3rem;
-            width: 20px;
-            height: 20px;
-            background: var(--gradient);
-            border-radius: 50%;
-            border: 3px solid var(--bg-primary);
-            z-index: 2;
-        }
-
-        .timeline-content h3 {
-            color: var(--text-primary);
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        .timeline-content h3::before {
-            content: '💼';
-            font-size: 1.2rem;
-        }
-
-        .timeline-meta {
-            color: var(--accent-primary);
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .timeline-meta::before {
-            content: '📅';
-            font-size: 0.9rem;
-        }
-
-        .timeline-content p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            background: var(--bg-primary);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--accent-primary);
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .contact-item {
-            padding: 2rem;
-            background: var(--bg-primary);
-            border-radius: 15px;
-            border: 1px solid var(--border-primary);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow);
-        }
-
-        .contact-item i {
-            font-size: 2rem;
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-        }
-
-        .contact-item h3 {
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .contact-item a, .contact-item p {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .contact-item a:hover {
-            color: var(--accent-primary);
-        }
-
-        /* Loading States */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .spinner {
-            border: 3px solid var(--border-primary);
-            border-top: 3px solid var(--accent-primary);
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--bg-secondary);
-            color: var(--text-secondary);
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--border-primary);
-        }
-
-        .footer a {
-            color: var(--accent-primary);
-            text-decoration: none;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
-            }
-            
-            .hero-image {
-                width: 220px;
-                height: 220px;
-                margin: 0 auto;
-            }
-            
-            .hero-text {
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1, .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-image {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .nav-right {
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .section {
-                padding: 40px 20px;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .main {
-                margin: 0 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linkan Dash — Computational Biologist</title>
+<meta name="description" content="Linkan Dash — Computational Biologist & Data Analyst. Functional genomics, chromatin architecture, single-cell & spatial transcriptomics, and bioinformatics pipeline development.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..700&family=Hanken+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+<style>
+:root{
+  --paper:#f6f2e9;
+  --paper-2:#efe9da;
+  --card:#fffdf8;
+  --ink:#1a1c19;
+  --ink-soft:#4c4f48;
+  --ink-faint:#838578;
+  --line:#ddd5c2;
+  --green:#1f5d3f;
+  --green-2:#3c7a55;
+  --moss:#6f9560;
+  --clay:#bc5631;
+  --gold:#bb8f36;
+  --shadow-sm:0 2px 8px rgba(40,46,34,.06);
+  --shadow:0 18px 50px -22px rgba(31,56,38,.35);
+  --shadow-lg:0 30px 70px -28px rgba(31,56,38,.45);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* grain texture overlay */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  pointer-events:none;z-index:9999;
+  opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--green-2);border-radius:6px;border:3px solid var(--paper-2)}
+::selection{background:var(--clay);color:#fff}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;
+  background:linear-gradient(90deg,var(--green),var(--moss),var(--gold),var(--clay));}
+
+/* ---------- HEADER ---------- */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:.4s;
+  background:rgba(246,242,233,0);border-bottom:1px solid transparent;}
+.header.scrolled{background:rgba(246,242,233,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;}
+.logo{font-family:var(--mono);font-size:.95rem;font-weight:600;color:var(--ink);
+  text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;}
+.logo .dot{width:9px;height:9px;border-radius:50%;background:var(--clay);
+  box-shadow:0 0 0 4px rgba(188,86,49,.18);animation:pulse 2.4s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(188,86,49,.18)}50%{box-shadow:0 0 0 8px rgba(188,86,49,0)}}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-links{display:flex;list-style:none;gap:1.8rem;}
+.nav-links a{text-decoration:none;color:var(--ink-soft);font-weight:500;font-size:.92rem;
+  position:relative;transition:.25s;}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-5px;width:0;height:2px;
+  background:var(--clay);transition:.3s;}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.gh{color:var(--ink-soft);font-size:1.35rem;transition:.3s;}
+.gh:hover{color:var(--green);transform:translateY(-2px)}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 70px;overflow:hidden;}
+#net{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9;}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);z-index:0;opacity:.5;}
+.blob.b1{width:520px;height:520px;background:radial-gradient(circle,#7fb98f,transparent 65%);top:-120px;right:-80px;}
+.blob.b2{width:460px;height:460px;background:radial-gradient(circle,#e6b67f,transparent 65%);bottom:-140px;left:-90px;opacity:.4;}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.5fr .9fr;
+  gap:3.5rem;align-items:center;width:100%;}
+.eyebrow{font-family:var(--mono);font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--clay);margin-bottom:1.4rem;display:inline-flex;align-items:center;gap:.7rem;}
+.eyebrow::before{content:'';width:34px;height:1px;background:var(--clay);}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(3.2rem,7vw,6rem);
+  line-height:.95;letter-spacing:-.03em;margin-bottom:1.4rem;}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--green);
+  font-variation-settings:'SOFT' 60,'WONK' 1;}
+.hero .role{font-size:1.32rem;color:var(--ink-soft);max-width:38ch;margin-bottom:.6rem;font-weight:500;}
+.hero .role b{color:var(--ink);font-weight:600;}
+.hero .lede{font-size:1.02rem;color:var(--ink-soft);max-width:46ch;margin-bottom:2.2rem;}
+.cta{display:flex;gap:.9rem;flex-wrap:wrap;}
+.btn{padding:.85rem 1.5rem;border-radius:40px;font-family:var(--sans);font-size:.95rem;
+  font-weight:600;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;
+  gap:.6rem;transition:.3s;border:1px solid transparent;}
+.btn-1{background:var(--green);color:#f6f2e9;box-shadow:var(--shadow);}
+.btn-1:hover{background:var(--ink);transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.btn-2{background:transparent;color:var(--ink);border-color:var(--line);}
+.btn-2:hover{border-color:var(--green);color:var(--green);transform:translateY(-3px);background:var(--card);}
+
+.portrait{position:relative;justify-self:center;}
+.portrait .frame{width:300px;height:300px;border-radius:50%;overflow:hidden;
+  background:linear-gradient(145deg,var(--green-2),var(--moss));
+  display:flex;align-items:center;justify-content:center;position:relative;z-index:2;
+  box-shadow:var(--shadow-lg);border:6px solid var(--card);}
+.portrait .frame img{width:100%;height:100%;object-fit:cover;}
+.portrait .mono-fallback{font-family:var(--serif);font-size:5.5rem;color:#f6f2e9;font-weight:500;}
+.portrait .ring{position:absolute;inset:-22px;border-radius:50%;border:1.5px dashed var(--green-2);
+  animation:spin 38s linear infinite;z-index:1;}
+.portrait .ring2{position:absolute;inset:-44px;border-radius:50%;border:1px solid rgba(188,86,49,.4);z-index:1;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.helix{position:absolute;right:-46px;top:-30px;z-index:3;}
+
+/* ---------- SECTIONS ---------- */
+.section{padding:100px 0;position:relative;}
+.section.alt{background:var(--paper-2);}
+.sec-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:3.2rem;}
+.sec-num{font-family:var(--mono);font-size:.9rem;color:var(--clay);font-weight:600;}
+.sec-head h2{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:500;
+  letter-spacing:-.02em;line-height:1;}
+.sec-head .rule{flex:1;height:1px;background:var(--line);align-self:center;margin-left:.5rem;}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:start;}
+.about-grid p{font-size:1.12rem;color:var(--ink-soft);margin-bottom:1.3rem;}
+.about-grid p .hl{color:var(--green);font-weight:600;}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.6rem 1.4rem;
+  transition:.35s;position:relative;overflow:hidden;}
+.stat::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--clay);
+  transform:scaleY(0);transform-origin:top;transition:.4s;}
+.stat:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent;}
+.stat:hover::before{transform:scaleY(1)}
+.stat .num{font-family:var(--serif);font-size:2.6rem;font-weight:600;color:var(--green);line-height:1;
+  display:flex;align-items:baseline;}
+.stat .num small{font-size:1.4rem;margin-left:2px;color:var(--clay);}
+.stat .lbl{font-size:.82rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.08em;
+  margin-top:.6rem;font-weight:600;}
+
+/* timeline */
+.timeline{position:relative;}
+.timeline::before{content:'';position:absolute;left:13px;top:8px;bottom:8px;width:2px;
+  background:linear-gradient(var(--green),var(--moss),var(--gold));}
+.tl-item{position:relative;padding-left:3.2rem;padding-bottom:2.6rem;}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:5px;top:6px;width:18px;height:18px;border-radius:50%;
+  background:var(--card);border:3px solid var(--green);z-index:2;transition:.3s;}
+.tl-item.now .tl-dot{background:var(--clay);border-color:var(--clay);
+  box-shadow:0 0 0 5px rgba(188,86,49,.16);}
+.tl-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.7rem 1.9rem;
+  transition:.35s;}
+.tl-card:hover{transform:translateX(6px);box-shadow:var(--shadow);border-color:transparent;}
+.tl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;}
+.tl-card h3{font-family:var(--serif);font-size:1.4rem;font-weight:600;letter-spacing:-.01em;}
+.tl-card .sub{color:var(--green);font-weight:600;font-size:1rem;margin:.15rem 0 .2rem;}
+.tl-card .place{color:var(--ink-faint);font-size:.92rem;}
+.tl-date{font-family:var(--mono);font-size:.78rem;color:var(--clay);background:rgba(188,86,49,.08);
+  padding:.35rem .75rem;border-radius:30px;white-space:nowrap;font-weight:500;}
+.tl-item.now .tl-date{background:var(--clay);color:#fff;}
+.tl-card ul{list-style:none;margin-top:1rem;}
+.tl-card li{position:relative;padding-left:1.4rem;margin-bottom:.55rem;color:var(--ink-soft);font-size:.97rem;}
+.tl-card li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;
+  background:var(--moss);}
+.tl-card li b{color:var(--ink);font-weight:600;}
+
+/* education */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;}
+.edu-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:2rem;
+  transition:.35s;position:relative;overflow:hidden;}
+.edu-card:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent;}
+.edu-card .ic{font-size:1.6rem;color:var(--clay);margin-bottom:1rem;}
+.edu-card h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;margin-bottom:.3rem;}
+.edu-card .deg{color:var(--green);font-weight:600;margin-bottom:.6rem;}
+.edu-card .meta{font-family:var(--mono);font-size:.8rem;color:var(--ink-faint);}
+
+/* publications */
+.pubs{display:flex;flex-direction:column;gap:1.1rem;}
+.pub{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem 1.8rem;
+  transition:.35s;display:grid;grid-template-columns:auto 1fr auto;gap:1.4rem;align-items:center;}
+.pub:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent;}
+.pub .yr{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--green-2);
+  line-height:1;min-width:64px;}
+.pub h3{font-size:1.08rem;font-weight:600;line-height:1.35;margin-bottom:.4rem;letter-spacing:-.01em;}
+.pub .auth{font-size:.9rem;color:var(--ink-soft);}
+.pub .auth b{color:var(--clay);font-weight:600;}
+.pub .jour{font-style:italic;color:var(--ink-faint);font-size:.88rem;margin-top:.15rem;}
+.pub .badge{display:inline-block;font-size:.72rem;font-family:var(--mono);font-weight:600;
+  color:var(--gold);background:rgba(187,143,54,.12);padding:.15rem .55rem;border-radius:20px;margin-top:.4rem;}
+.pub .badge.co{color:var(--green);background:rgba(31,93,63,.1);}
+.pub-link{color:var(--green);font-size:1.2rem;text-decoration:none;width:42px;height:42px;
+  border:1px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;
+  transition:.3s;flex-shrink:0;}
+.pub-link:hover{background:var(--green);color:#fff;border-color:var(--green);transform:rotate(8deg);}
+
+/* skills */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.8rem;
+  transition:.35s;}
+.skill:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:transparent;}
+.skill h3{font-size:1.05rem;font-weight:700;margin-bottom:1.1rem;display:flex;align-items:center;gap:.7rem;
+  color:var(--ink);}
+.skill h3 i{color:var(--clay);font-size:1.05rem;}
+.tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+.tag{font-family:var(--mono);font-size:.78rem;background:var(--paper-2);color:var(--ink-soft);
+  padding:.4rem .75rem;border-radius:8px;border:1px solid var(--line);transition:.25s;}
+.tag:hover{background:var(--green);color:#f6f2e9;border-color:var(--green);transform:translateY(-2px);}
+
+/* awards + certs + leadership columns */
+.three{display:grid;grid-template-columns:1.1fr 1fr 1.1fr;gap:2.4rem;}
+.col h3{font-family:var(--serif);font-size:1.45rem;font-weight:600;margin-bottom:1.4rem;
+  display:flex;align-items:center;gap:.6rem;}
+.col h3 i{color:var(--clay);font-size:1.1rem;}
+.lst{list-style:none;display:flex;flex-direction:column;gap:1rem;}
+.lst li{position:relative;padding-left:1.5rem;font-size:.96rem;color:var(--ink-soft);line-height:1.45;}
+.lst li::before{content:'';position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:2px;
+  background:var(--moss);transform:rotate(45deg);}
+.lst li b{color:var(--ink);font-weight:600;display:block;}
+.lst li span{font-family:var(--mono);font-size:.76rem;color:var(--ink-faint);}
+
+/* contact */
+.contact{text-align:center;}
+.contact .big{font-family:var(--serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:500;
+  letter-spacing:-.02em;margin-bottom:1rem;line-height:1.05;}
+.contact .big em{font-style:italic;color:var(--green);}
+.contact .sub{color:var(--ink-soft);font-size:1.1rem;max-width:46ch;margin:0 auto 3rem;}
+.ccards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.2rem;max-width:920px;margin:0 auto;}
+.ccard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.7rem 1rem;
+  text-decoration:none;transition:.35s;display:block;}
+.ccard:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:transparent;}
+.ccard i{font-size:1.5rem;color:var(--green);margin-bottom:.7rem;transition:.3s;}
+.ccard:hover i{color:var(--clay);transform:scale(1.15);}
+.ccard .t{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint);font-weight:600;}
+.ccard .v{font-size:.92rem;color:var(--ink);font-weight:500;margin-top:.2rem;word-break:break-word;}
+
+/* footer */
+.footer{background:var(--ink);color:#c9cabd;padding:2.6rem 0;text-align:center;}
+.footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer p{font-size:.88rem;}
+.footer .mono{font-family:var(--mono);font-size:.78rem;color:#8a8c7d;}
+.footer a{color:var(--moss);text-decoration:none;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:.8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:none;}
+
+@media(max-width:980px){
+  .hero-grid,.about-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .portrait{order:-1}
+  .three{grid-template-columns:1fr;gap:2.6rem;}
+  .edu-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:620px){
+  .wrap{padding:0 20px}
+  .section{padding:70px 0}
+  .pub{grid-template-columns:1fr;gap:.8rem;text-align:left}
+  .pub .yr{font-size:1.3rem}
+  .stats{grid-template-columns:1fr 1fr}
+  .helix{display:none}
+  .tl-card{padding:1.4rem}
+}
+</style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <a href="#" class="logo">Linkan Dash</a>
-            <div class="nav-right">
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <a href="https://github.com/linkangit" target="_blank" class="github-link">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
-        </nav>
-    </header>
+<div class="progress" id="progress"></div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-image">
-                    <img src="images/headshot.jpg" alt="Linkan Dash" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="placeholder-icon" style="display: none;">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                </div>
-                <div class="hero-text">
-                    <h1>
-                        <span class="highlight">Linkan Dash</span>
-                    </h1>
-                    <p>Bioinformatician & Computational Biology Researcher</p>
-                    <div class="cta-buttons">
-                        <a href="#publications" class="btn btn-primary">
-                            <i class="fas fa-graduation-cap"></i> View Publications
-                        </a>
-                        <a href="https://github.com/linkangit" target="_blank" class="btn btn-secondary">
-                            <i class="fab fa-github"></i> GitHub Page
-                        </a>
-                        <a href="#contact" class="btn btn-secondary">
-                            <i class="fas fa-envelope"></i> Get In Touch
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content -->
-    <main class="main">
-        <div class="container">
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <p>Highly motivated Postdoctoral Scientist with a strong publication record, offering 2 years of industry Research & Development (R&D), 8+ years of molecular wet-lab, and 5 years of computational biology and bioinformatics research experience.</p>
-                <p>Specialized in Next-Generation Sequencing (NGS) data analysis, bioinformatics pipeline development, and meta-data management. Experienced in applying AI/ML to bioinformatics workflows, and interpretation of results for regulatory and product development.</p>
-                
-                <div class="stats">
-                    <div class="stat">
-                        <h3>8+</h3>
-                        <p>Years Research Experience</p>
-                    </div>
-                    <div class="stat">
-                        <h3>PhD</h3>
-                        <p>Genetics & Genomics</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-        <!-- Publications Section -->
-        <section id="publications" class="section">
-            <h2>Publications</h2>
-            <div class="publications-list">
-                <div class="publication-item">
-                    <h3>Harnessing Single-Cell and Spatial Transcriptomics for Crop Improvement</h3>
-                    <p class="authors">Hu, Y., <strong>Dash, Linkan</strong>, May, G., Sardesai, Nagesh, & Deschamps, Stephane (2024)</p>
-                    <p class="journal"><em>Plants</em>, 13(24), 3476</p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <h3>Changes in cell wall composition due to a pectin biosynthesis enzyme GAUT10 impact root growth</h3>
-                    <p class="authors"><strong>Dash, Linkan</strong>, Swaminathan, Sivakumar, Šimura, Jan, et al. (2023)</p>
-                    <p class="journal"><em>Plant Physiology</em></p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <h3>The Auxin Response Factor ARF27 is required for maize root morphogenesis</h3>
-                    <p class="authors"><strong>Dash, Linkan</strong>, McReynolds, Maxwell R, et al. (2023)</p>
-                    <p class="journal"><em>bioRxiv</em></p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <h3>Roles of auxin pathways in maize biology</h3>
-                    <p class="authors">Cowling, Craig L*, <strong>Dash, Linkan*</strong>, Kelley, Dior R. (2023)</p>
-                    <p class="journal"><em>Journal of Experimental Botany</em></p>
-                    <p class="co-first">*Co-first authors</p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <h3>Temporal and spatial auxin responsive networks in maize primary roots</h3>
-                    <p class="authors">McReynolds, Maxwell R*, <strong>Dash, Linkan*</strong>, et al. (2022)</p>
-                    <p class="journal"><em>Quantitative Plant Biology</em></p>
-                    <p class="co-first">*Co-first authors</p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <h3>slim shady is a novel allele of PHYTOCHROME B present in the T-DNA line SALK_015201</h3>
-                    <p class="authors"><strong>Dash, Linkan</strong>, McEwan, Robert E, et al. (2021)</p>
-                    <p class="journal"><em>Plant Direct</em> - <span class="award">Top Cited Article (2021–2022)</span></p>
-                    <div class="publication-links">
-                        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link">
-                            <i class="fas fa-graduation-cap"></i> Google Scholar
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="section">
-            <h2>Core Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3><i class="fas fa-dna"></i> NGS & Molecular Characterization</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Whole Genome Sequencing</span>
-                        <span class="skill-tag">single-cell/single-nuclei RNA-seq</span>
-                        <span class="skill-tag">10x Visium/Visium-HD Spatial Transcriptomics</span>
-                        <span class="skill-tag">ATAC-seq/ChIP-seq</span>
-                        <span class="skill-tag">Illumina Library Prep</span>
-                        <span class="skill-tag">High-throughput Genotyping</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-chart-line"></i> Bioinformatics & Computational Biology</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Multi-omics Integration</span>
-                        <span class="skill-tag">GATK</span>
-                        <span class="skill-tag">GENIE3</span>
-                        <span class="skill-tag">WGCNA</span>
-                        <span class="skill-tag">DESeq2</span>
-                        <span class="skill-tag">STAR</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Programming & Data Science</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">R</span>
-                        <span class="skill-tag">Bash</span>
-                        <span class="skill-tag">Machine Learning</span>
-                        <span class="skill-tag">HPC (LSF)</span>
-                        <span class="skill-tag">AWS/Azure</span>
-                    </div>
-                </div>
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-microscope"></i> Molecular & Cell Biology</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">CRISPR/Cas9</span>
-                        <span class="skill-tag">qPCR/ddPCR</span>
-                        <span class="skill-tag">Live-cell Imaging</span>
-                        <span class="skill-tag">Confocal Microscopy</span>
-                        <span class="skill-tag">Tissue Culture</span>
-                        <span class="skill-tag">Protein Purification</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="section">
-            <h2>Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Postdoctoral Scientist</h3>
-                        <div class="timeline-meta">Corteva Agriscience | Aug 2023 – Present</div>
-                        <p>Spearheaded high-priority R&D bioinformatics projects, implemented deep learning-assisted single-cell workflows, and engineered computational solutions reducing assay costs by 60%. Developed genotyping workflows and discovered >30 novel candidate genes through AI/ML applications.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Graduate Research Assistant</h3>
-                        <div class="timeline-meta">Iowa State University | Aug 2018 – May 2023</div>
-                        <p>Led four major projects in plant stress physiology, secured >$1M in grant funding, and published four peer-reviewed manuscripts. Developed custom genomic analysis pipelines and integrated multi-omics datasets to identify novel auxin-response regulators.</p>
-                    </div>
-                </div>
-                
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Undergraduate Research Assistant</h3>
-                        <div class="timeline-meta">NISER | Aug 2016 – May 2018</div>
-                        <p>Conducted >100 molecular biology assays with 98% success rate, authored technical protocols, mentored research team of five members, and improved agricultural crop yield by 10% through experimental design optimization.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <h2>Get In Touch</h2>
-            <div class="contact-grid">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <h3>Email</h3>
-                    <a href="mailto:linkandash15@gmail.com">linkandash15@gmail.com</a>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fab fa-linkedin"></i>
-                    <h3>LinkedIn</h3>
-                    <a href="https://linkedin.com/in/linkan-dash" target="_blank">linkedin.com/in/linkan-dash</a>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fab fa-github"></i>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/linkangit" target="_blank">github.com/linkangit</a>
-                </div>
-
-                <div class="contact-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Google Scholar</h3>
-                    <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank">View Publications</a>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fab fa-google"></i>
-                    <h3>Gmail</h3>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=linkandash15@gmail.com" target="_blank">Send Message</a>
-                </div>
-                
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Location</h3>
-                    <p>Johnston, Iowa</p>
-                </div>
-            </div>
-        </section>
+<!-- HEADER -->
+<header class="header" id="header">
+  <nav class="nav wrap">
+    <a href="#top" class="logo"><span class="dot"></span>linkan.dash()</a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="https://github.com/linkangit" target="_blank" class="gh" aria-label="GitHub"><i class="fab fa-github"></i></a>
     </div>
-    </main>
+  </nav>
+</header>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Linkan Dash. All rights reserved. | Bioinformatician & Computational Biology Researcher</p>
+<!-- HERO -->
+<section class="hero" id="top">
+  <canvas id="net"></canvas>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-text">
+        <span class="eyebrow">Computational Biology · Genomics</span>
+        <h1>Linkan<br><em>Dash</em></h1>
+        <p class="role"><b>Computational Biologist</b> &amp; Data Analyst</p>
+        <p class="lede">Turning high-dimensional sequencing data into biological insight — functional genomics, chromatin architecture, and single-cell &amp; spatial transcriptomics, bridged by hybrid wet-lab and computational expertise.</p>
+        <div class="cta">
+          <a href="#publications" class="btn btn-1"><i class="fas fa-graduation-cap"></i> View Publications</a>
+          <a href="Linkan_Dash_Resume_2026.pdf" target="_blank" class="btn btn-2"><i class="fas fa-file-arrow-down"></i> Download CV</a>
+          <a href="#contact" class="btn btn-2"><i class="fas fa-envelope"></i> Get in Touch</a>
         </div>
-    </footer>
+      </div>
+      <div class="portrait">
+        <div class="ring"></div>
+        <div class="ring2"></div>
+        <svg class="helix" width="64" height="150" viewBox="0 0 64 150" fill="none">
+          <g stroke="#1f5d3f" stroke-width="2.5" stroke-linecap="round">
+            <path d="M14 6 Q50 30 14 54 Q50 78 14 102 Q50 126 14 146" opacity=".55"/>
+            <path d="M50 6 Q14 30 50 54 Q14 78 50 102 Q14 126 50 146" opacity=".55"/>
+          </g>
+          <g stroke="#bc5631" stroke-width="2">
+            <line x1="18" y1="16" x2="46" y2="16"/><line x1="40" y1="30" x2="24" y2="30"/>
+            <line x1="18" y1="44" x2="46" y2="44"/><line x1="40" y1="64" x2="24" y2="64"/>
+            <line x1="18" y1="88" x2="46" y2="88"/><line x1="40" y1="112" x2="24" y2="112"/>
+            <line x1="18" y1="136" x2="46" y2="136"/>
+          </g>
+        </svg>
+        <div class="frame">
+          <img src="images/headshot.jpg" alt="Linkan Dash" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="mono-fallback" style="display:none;align-items:center;justify-content:center;width:100%;height:100%;">LD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // GitHub API integration
-        async function fetchGitHubRepos() {
-            const username = 'linkangit';
-            const container = document.getElementById('repos-container');
-            
-            try {
-                // Fetch user's repositories
-                const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`);
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch repositories');
-                }
-                
-                const repos = await response.json();
-                
-                // Filter for pinned repositories or most recent/relevant ones
-                const featuredRepos = repos
-                    .filter(repo => !repo.fork && !repo.archived) // Exclude forked and archived repositories
-                    .sort((a, b) => {
-                        // Sort by a combination of stars, forks, and recent updates
-                        const scoreA = a.stargazers_count * 3 + a.forks_count * 2 + (new Date(a.updated_at).getTime() / 1000000000);
-                        const scoreB = b.stargazers_count * 3 + b.forks_count * 2 + (new Date(b.updated_at).getTime() / 1000000000);
-                        return scoreB - scoreA;
-                    })
-                    .slice(0, 6); // Take top 6 repositories
-                
-                displayRepos(featuredRepos);
-                
-            } catch (error) {
-                console.error('Error fetching repositories:', error);
-                container.innerHTML = `
-                    <div class="loading">
-                        <p>Unable to load repositories. You can view them directly on <a href="https://github.com/linkangit" target="_blank" style="color: var(--accent-primary);">GitHub</a></p>
-                    </div>
-                `;
-            }
-        }
-        
-        function displayRepos(repos) {
-            const container = document.getElementById('repos-container');
-            
-            if (repos.length === 0) {
-                container.innerHTML = `
-                    <div class="loading">
-                        <p>No repositories found. Check out my <a href="https://github.com/linkangit" target="_blank" style="color: var(--accent-primary);">GitHub profile</a></p>
-                    </div>
-                `;
-                return;
-            }
-            
-            const reposHTML = repos.map(repo => {
-                const updatedDate = new Date(repo.updated_at).toLocaleDateString();
-                const languageColor = getLanguageColor(repo.language);
-                
-                return `
-                    <div class="repo-card">
-                        <div class="repo-header">
-                            <a href="${repo.html_url}" target="_blank" class="repo-name">
-                                <i class="fas fa-folder-open"></i>
-                                ${repo.name}
-                            </a>
-                            <span class="repo-visibility">${repo.private ? 'Private' : 'Public'}</span>
-                        </div>
-                        
-                        <p class="repo-description">
-                            ${repo.description || 'No description available'}
-                        </p>
-                        
-                        <div class="repo-footer">
-                            ${repo.language ? `
-                                <div class="repo-stat">
-                                    <span class="language-color" style="background-color: ${languageColor};"></span>
-                                    ${repo.language}
-                                </div>
-                            ` : ''}
-                            
-                            <div class="repo-stat">
-                                <i class="fas fa-star"></i>
-                                ${repo.stargazers_count}
-                            </div>
-                            
-                            <div class="repo-stat">
-                                <i class="fas fa-code-branch"></i>
-                                ${repo.forks_count}
-                            </div>
-                            
-                            <div class="repo-stat">
-                                Updated ${updatedDate}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            container.innerHTML = reposHTML;
-        }
-        
-        function getLanguageColor(language) {
-            const colors = {
-                'JavaScript': '#f7df1e',
-                'Python': '#3776ab',
-                'HTML': '#e34c26',
-                'CSS': '#1572b6',
-                'R': '#276dc3',
-                'Shell': '#89e051',
-                'Jupyter Notebook': '#da5b0b',
-                'Java': '#ed8b00',
-                'C++': '#00599c',
-                'C': '#a8b9cc',
-                'Go': '#00add8',
-                'Rust': '#dea584',
-                'TypeScript': '#2b7489'
-            };
-            return colors[language] || '#586069';
-        }
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">01</span><h2>About</h2><span class="rule"></span></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I'm a <span class="hl">highly motivated scientist</span> with demonstrated expertise in data engineering, data-management strategy, and computational analysis — currently a Postdoctoral Associate at Rutgers University studying 3D chromatin architecture and gene regulation.</p>
+        <p>I bring <span class="hl">2+ years of industry R&amp;D</span>, 8+ years of molecular wet-lab work, and 6 years of bioinformatics experience. My focus spans functional genomics (NGS, sequencing &amp; genotyping platforms), chromatin architecture, and plant epigenomics — solving problems through statistical computing in R and Python.</p>
+        <p>A self-driven hybrid scientist, I'm actively seeking roles in <span class="hl">Data Analytics, Computational Biology, Bioinformatics, or Genomics R&amp;D.</span></p>
+      </div>
+      <div class="stats reveal">
+        <div class="stat"><div class="num" data-target="8"><small>+</small></div><div class="lbl">Yrs Wet-Lab</div></div>
+        <div class="stat"><div class="num" data-target="6"></div><div class="lbl">Yrs Bioinformatics</div></div>
+        <div class="stat"><div class="num" data-target="7"></div><div class="lbl">Publications</div></div>
+        <div class="stat"><div class="num" data-target="30"><small>+</small></div><div class="lbl">Candidate Genes Found</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+<!-- EXPERIENCE -->
+<section class="section alt" id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">02</span><h2>Experience</h2><span class="rule"></span></div>
+    <div class="timeline">
 
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+      <div class="tl-item now reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div>
+              <h3>Postdoctoral Associate</h3>
+              <div class="sub">Chromatin Architecture &amp; Gene Regulation</div>
+              <div class="place">Rutgers University · Dr. Mark Zander's Lab · Piscataway, NJ</div>
+            </div>
+            <span class="tl-date">Jan 2026 – Present</span>
+          </div>
+          <ul>
+            <li>Using <b>Micro-C-XL ChIP and Hi-C-ChIP-seq</b> to investigate 3D chromatin looping during Jasmonic acid signaling in crop and medicinal plants.</li>
+            <li>Designing custom pipelines for high-resolution chromatin-interaction datasets, integrating multi-omics data to elucidate gene-regulatory mechanisms.</li>
+            <li>Running end-to-end workflows from library prep to advanced data analysis, combining computational and molecular biology expertise.</li>
+          </ul>
+        </div>
+      </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div>
+              <h3>Postdoctoral Scientist</h3>
+              <div class="sub">Developmental Genomics &amp; Mitochondrial Physiology</div>
+              <div class="place">Marine Biological Laboratory · Woods Hole, MA</div>
+            </div>
+            <span class="tl-date">Sep 2025 – Dec 2025</span>
+          </div>
+          <ul>
+            <li>Designed time-course <b>bulk RNA-seq</b> across developmental windows (1–32 cell embryos) in <i>Brachionus manjavacas</i> to map stage-specific transcriptional networks.</li>
+            <li>Prioritized 5 candidate genes with 2-fold reduced expression in high maternal-age embryos via end-to-end statistical workflows.</li>
+            <li>Validated targets through optimized <b>RNAi</b> protocols and supported findings with confocal &amp; fluorescence microscopy.</li>
+          </ul>
+        </div>
+      </div>
 
-        // Observe all sections for animation
-        document.querySelectorAll('.section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div>
+              <h3>Postdoctoral Scientist</h3>
+              <div class="sub">Genome Center of Excellence</div>
+              <div class="place">Corteva Agriscience · Johnston, IA</div>
+            </div>
+            <span class="tl-date">Aug 2023 – Aug 2025</span>
+          </div>
+          <ul>
+            <li>Led two high-priority R&amp;D bioinformatics projects from design to delivery with <b>100% on-time delivery</b>.</li>
+            <li>Engineered a T-DNA integration-site mapping workflow using variant calling, <b>reducing assay costs by 60%</b>.</li>
+            <li>Built deep-learning-assisted <b>scRNA-seq / scATAC-seq</b> and Visium spatial-transcriptomics workflows; discovered <b>&gt;30 novel candidate genes</b>.</li>
+            <li>Served as elected <b>ASPB Postdoc Ambassador &amp; Council member</b> (2025–26); contributed datasets to patent filings.</li>
+          </ul>
+        </div>
+      </div>
 
-        // Initialize GitHub repos if container exists
-        if (document.getElementById('repos-container')) {
-            fetchGitHubRepos();
-        }
-    </script>
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div>
+              <h3>Graduate Research Assistant</h3>
+              <div class="sub">Plant Stress Physiology &amp; Auxin Signaling</div>
+              <div class="place">Iowa State University · Ames, IA</div>
+            </div>
+            <span class="tl-date">Aug 2018 – May 2023</span>
+          </div>
+          <ul>
+            <li>Drove four major research projects and secured <b>&gt;$1M in NSF grant funding</b>; published four first/co-authored manuscripts.</li>
+            <li>Built custom R pipelines for RNA-seq, ChIP-seq &amp; DAP-seq, improving QC and reproducibility by 40%.</li>
+            <li>Produced <b>&gt;50 publication-quality figures</b> (ggplot2 / Tidyverse) and optimized &gt;50 molecular protocols.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <span class="tl-dot"></span>
+        <div class="tl-card">
+          <div class="tl-top">
+            <div>
+              <h3>Undergraduate Research Assistant</h3>
+              <div class="sub">Molecular Biology</div>
+              <div class="place">NISER · Bhubaneswar, India</div>
+            </div>
+            <span class="tl-date">Aug 2016 – May 2018</span>
+          </div>
+          <ul>
+            <li>Conducted <b>&gt;100 RT-PCR/qPCR, Western blot and cloning assays</b> with a 98% success rate.</li>
+            <li>Mentored a five-member team, improving efficiency by 15%; presented at two national conferences.</li>
+            <li>Managed greenhouse operations and experimental design, increasing crop yield by 10%.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">03</span><h2>Education</h2><span class="rule"></span></div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="ic"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Iowa State University</h3>
+        <div class="deg">Ph.D. in Genetics &amp; Genomics</div>
+        <div class="meta">Ames, Iowa · Aug 2018 – May 2023</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="ic"><i class="fas fa-flask"></i></div>
+        <h3>NISER</h3>
+        <div class="deg">B.S./M.S. Dual Degree, Biological Sciences</div>
+        <div class="meta">Bhubaneswar, India · Aug 2013 – May 2018</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section alt" id="publications">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Publications</h2><span class="rule"></span></div>
+    <div class="pubs">
+
+      <div class="pub reveal">
+        <div class="yr">2024</div>
+        <div>
+          <h3>Harnessing Single-Cell and Spatial Transcriptomics for Crop Improvement</h3>
+          <div class="auth">Hu, Y., <b>Dash, L.</b>, May, G., Sardesai, N. &amp; Deschamps, S.</div>
+          <div class="jour">Plants, 13(24), 3476</div>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2023</div>
+        <div>
+          <h3>Changes in cell wall composition due to a pectin biosynthesis enzyme GAUT10 impact root growth</h3>
+          <div class="auth"><b>Dash, L.</b>, Swaminathan, S., Šimura, J., et al.</div>
+          <div class="jour">Plant Physiology</div>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2023</div>
+        <div>
+          <h3>The Auxin Response Factor ARF27 is required for maize root morphogenesis</h3>
+          <div class="auth"><b>Dash, L.</b>, McReynolds, M. R., et al.</div>
+          <div class="jour">bioRxiv</div>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2023</div>
+        <div>
+          <h3>Roles of auxin pathways in maize biology</h3>
+          <div class="auth">Cowling, C. L.*, <b>Dash, L.*</b>, Kelley, D. R.</div>
+          <div class="jour">Journal of Experimental Botany</div>
+          <span class="badge co">Co-first authors</span>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2022</div>
+        <div>
+          <h3>Temporal and spatial auxin responsive networks in maize primary roots</h3>
+          <div class="auth">McReynolds, M. R.*, <b>Dash, L.*</b>, et al.</div>
+          <div class="jour">Quantitative Plant Biology</div>
+          <span class="badge co">Co-first authors</span>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2021</div>
+        <div>
+          <h3>slim shady is a novel allele of PHYTOCHROME B present in the T-DNA line SALK_015201</h3>
+          <div class="auth"><b>Dash, L.</b>, McEwan, R. E., et al.</div>
+          <div class="jour">Plant Direct</div>
+          <span class="badge"><i class="fas fa-star"></i> Top Cited Article 2021–2022</span>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+      <div class="pub reveal">
+        <div class="yr">2019</div>
+        <div>
+          <h3>Isolation and culture of primary embryonic zebrafish neural tissue</h3>
+          <div class="auth">Patel, B. B., Clark, K. L., <b>Dash, L.</b>, et al.</div>
+          <div class="jour">Journal of Neuroscience Methods</div>
+        </div>
+        <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="pub-link" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Skills</h2><span class="rule"></span></div>
+    <div class="skills-grid">
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-diagram-project"></i> Data Engineering &amp; Management</h3>
+        <div class="tags">
+          <span class="tag">Custom pipeline dev</span><span class="tag">Workflow engineering</span>
+          <span class="tag">SQL / relational DBs</span><span class="tag">Large-scale data wrangling</span>
+          <span class="tag">QC frameworks</span><span class="tag">Snakemake</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-code"></i> Statistical Computing &amp; Programming</h3>
+        <div class="tags">
+          <span class="tag">R (tidyverse, DESeq2, WGCNA)</span><span class="tag">Python (Pandas, NumPy)</span>
+          <span class="tag">Scikit-learn</span><span class="tag">Bash / Shell</span>
+          <span class="tag">Machine Learning</span><span class="tag">HPC (LSF/bsub)</span><span class="tag">Git</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-dna"></i> Genomics &amp; Sequencing Platforms</h3>
+        <div class="tags">
+          <span class="tag">Illumina NGS</span><span class="tag">10x Chromium &amp; Visium</span>
+          <span class="tag">Genotyping</span><span class="tag">Variant calling (GATK)</span>
+          <span class="tag">SAMtools / BEDtools</span><span class="tag">STAR</span>
+          <span class="tag">Micro-C-XL / Hi-C-ChIP</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-chart-line"></i> Bioinformatics &amp; Data Analysis</h3>
+        <div class="tags">
+          <span class="tag">Multi-omics (SC-ION)</span><span class="tag">GRN (GENIE3, WGCNA)</span>
+          <span class="tag">ChIP/DAP/ATAC-seq</span><span class="tag">scRNA/scATAC-seq</span>
+          <span class="tag">Spatial (Scanpy, Seurat v5)</span><span class="tag">Trajectory analysis</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-chart-pie"></i> Data Visualization &amp; Reporting</h3>
+        <div class="tags">
+          <span class="tag">ggplot2</span><span class="tag">Matplotlib / Seaborn</span>
+          <span class="tag">JMP</span><span class="tag">GraphPad Prism</span>
+          <span class="tag">Loupe Browser</span><span class="tag">Publication figures</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-scissors"></i> Molecular Biology &amp; Gene Editing</h3>
+        <div class="tags">
+          <span class="tag">CRISPR/Cas9 (SDN1/2)</span><span class="tag">CRISPRa/i</span>
+          <span class="tag">Cloning</span><span class="tag">qPCR / ddPCR</span>
+          <span class="tag">Transformation</span><span class="tag">Protein purification/QC</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-microscope"></i> Microscopy &amp; Imaging</h3>
+        <div class="tags">
+          <span class="tag">Confocal / fluorescence</span><span class="tag">Live-cell imaging</span>
+          <span class="tag">ImageJ / FIJI</span><span class="tag">Subcellular localization</span>
+          <span class="tag">BiFC assays</span>
+        </div>
+      </div>
+
+      <div class="skill reveal">
+        <h3><i class="fas fa-robot"></i> AI, Cloud &amp; Advanced Tools</h3>
+        <div class="tags">
+          <span class="tag">AlphaFold3</span><span class="tag">ChatGPT / DeepSeek</span>
+          <span class="tag">Azure cloud</span><span class="tag">Deep learning workflows</span>
+          <span class="tag">MS Office Suite</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS / CERTS / LEADERSHIP -->
+<section class="section alt" id="recognition">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-num">06</span><h2>Recognition &amp; Service</h2><span class="rule"></span></div>
+    <div class="three">
+
+      <div class="col reveal">
+        <h3><i class="fas fa-trophy"></i> Awards</h3>
+        <ul class="lst">
+          <li><b>Top Cited Article — Plant Direct</b><span>2021–2022</span></li>
+          <li><b>Research Excellence &amp; Best Doctoral Thesis Award</b>Iowa State University<span>May 2023</span></li>
+          <li><b>DAAD German Academic Exchange Fellowship</b><span>May – Aug 2015</span></li>
+          <li><b>DST-INSPIRE Fellowship</b>Govt. of India</li>
+          <li><b>National Science Olympiad</b><span>2009 – 2011</span></li>
+        </ul>
+      </div>
+
+      <div class="col reveal">
+        <h3><i class="fas fa-certificate"></i> Certificates</h3>
+        <ul class="lst">
+          <li><b>Python for Data Science, AI &amp; Development</b>IBM<span>April 2025</span></li>
+          <li><b>Genomic Data Science &amp; Clustering</b>UC San Diego<span>May 2025</span></li>
+        </ul>
+      </div>
+
+      <div class="col reveal">
+        <h3><i class="fas fa-users"></i> Leadership</h3>
+        <ul class="lst">
+          <li><b>ASPB Council — Early Career Representative</b>American Society of Plant Biologists<span>Jul 2025 – Present</span></li>
+          <li><b>ASPB Ambassador</b><span>Jan 2025 – Present</span></li>
+          <li><b>Corteva GAIN Business Resource Group</b><span>Sep 2023 – Aug 2025</span></li>
+          <li><b>Head of Social Team, GDCB Grad/Postdoc Org</b>Iowa State University<span>Jan 2022 – May 2023</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="wrap contact">
+    <div class="reveal">
+      <div class="big">Let's <em>collaborate.</em></div>
+      <p class="sub">Open to roles in Data Analytics, Computational Biology, Bioinformatics &amp; Genomics R&amp;D. Always happy to talk science.</p>
+    </div>
+    <div class="ccards reveal">
+      <a href="mailto:linkandash15@gmail.com" class="ccard">
+        <i class="fas fa-envelope"></i><div class="t">Email</div><div class="v">linkandash15@gmail.com</div>
+      </a>
+      <a href="tel:5158173077" class="ccard">
+        <i class="fas fa-phone"></i><div class="t">Phone</div><div class="v">515-817-3077</div>
+      </a>
+      <a href="https://linkedin.com/in/linkan-dash" target="_blank" class="ccard">
+        <i class="fab fa-linkedin"></i><div class="t">LinkedIn</div><div class="v">in/linkan-dash</div>
+      </a>
+      <a href="https://github.com/linkangit" target="_blank" class="ccard">
+        <i class="fab fa-github"></i><div class="t">GitHub</div><div class="v">linkangit</div>
+      </a>
+      <a href="https://scholar.google.com/citations?user=Se_ILTgAAAAJ&hl=en" target="_blank" class="ccard">
+        <i class="fas fa-graduation-cap"></i><div class="t">Scholar</div><div class="v">Publications</div>
+      </a>
+      <a href="#top" class="ccard">
+        <i class="fas fa-location-dot"></i><div class="t">Location</div><div class="v">Piscataway, NJ</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <p>&copy; 2026 Linkan Dash — Computational Biologist &amp; Data Analyst</p>
+    <p class="mono">built with <span style="color:#bc5631">&lt;3</span> · <a href="https://github.com/linkangit" target="_blank">github.com/linkangit</a></p>
+  </div>
+</footer>
+
+<script>
+// scroll progress + header state
+const prog=document.getElementById('progress'),header=document.getElementById('header');
+function onScroll(){
+  const h=document.documentElement;
+  const sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight);
+  prog.style.width=(sc*100)+'%';
+  header.classList.toggle('scrolled',h.scrollTop>40);
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%5*60)+'ms';io.observe(el);
+});
+
+// animated counters
+const cio=new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,t=+el.dataset.target;
+    const suffix=el.querySelector('small')?el.querySelector('small').outerHTML:'';
+    let n=0;const step=Math.max(1,Math.ceil(t/45));
+    const tick=()=>{n=Math.min(n+step,t);el.innerHTML=n+suffix;if(n<t)requestAnimationFrame(tick);};
+    tick();cio.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('.num[data-target]').forEach(el=>cio.observe(el));
+
+// gene-regulatory-network canvas
+const canvas=document.getElementById('net'),ctx=canvas.getContext('2d');
+let W,H,nodes=[],mouse={x:-999,y:-999};
+const COLORS=['#1f5d3f','#3c7a55','#6f9560','#bc5631','#bb8f36'];
+function resize(){
+  const hero=document.querySelector('.hero');
+  W=canvas.width=hero.offsetWidth;H=canvas.height=hero.offsetHeight;
+  const count=Math.min(70,Math.floor(W*H/16000));
+  nodes=[];
+  for(let i=0;i<count;i++){
+    nodes.push({x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,
+      r:Math.random()*2.5+1.5,c:COLORS[Math.floor(Math.random()*COLORS.length)]});
+  }
+}
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<nodes.length;i++){
+    const a=nodes[i];
+    a.x+=a.vx;a.y+=a.vy;
+    if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1;
+    // mouse repel
+    const dx=a.x-mouse.x,dy=a.y-mouse.y,md=Math.hypot(dx,dy);
+    if(md<120){a.x+=dx/md*1.4;a.y+=dy/md*1.4;}
+    for(let j=i+1;j<nodes.length;j++){
+      const b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<130){
+        ctx.strokeStyle='rgba(60,122,85,'+(0.16*(1-d/130))+')';
+        ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+      }
+    }
+  }
+  for(const a of nodes){
+    ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,7);ctx.fillStyle=a.c;ctx.globalAlpha=.65;ctx.fill();ctx.globalAlpha=1;
+  }
+  requestAnimationFrame(draw);
+}
+const heroEl=document.querySelector('.hero');
+heroEl.addEventListener('mousemove',e=>{const r=heroEl.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+heroEl.addEventListener('mouseleave',()=>{mouse.x=mouse.y=-999;});
+window.addEventListener('resize',resize);
+resize();draw();
+</script>
 </body>
 </html>
